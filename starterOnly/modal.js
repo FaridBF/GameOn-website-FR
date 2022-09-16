@@ -12,14 +12,14 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeModalBtn = document.querySelectorAll(".close");
-
-// document.querySelector(".formData input[type=text]")
+const submitFormInput = document.querySelectorAll(".btn-submit");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
 // Close modal event
 closeModalBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+//sélection du bouton envoyer le formulaire
+submitFormInput.forEach((btn) => btn.addEventListener("click", getFormData));
 
 // launch modal form
 function launchModal() {
@@ -32,11 +32,8 @@ function closeModal() {
   modalbg.removeAttribute("style");
 }
 
-//sélection du bouton envoyer le formulaire
-const envoyerFormulaire = document.querySelector("#envoyerFormulaire");
-
-// fonction qui permet de set les valeurs dur formulaire dans le localStorage
-envoyerFormulaire.addEventListener("click", (e) => {
+// fonction qui récupère les données du form et demande la vérificaiton
+function getFormData(e) {
   e.preventDefault();
 
   const objectForm = {
@@ -49,8 +46,8 @@ envoyerFormulaire.addEventListener("click", (e) => {
       document.querySelector('input[name="location"]:checked') == null
         ? null
         : document.querySelector('input[name="location"]:checked').value,
-    checkbox1: document.querySelector("#checkbox1").checked,
-    checkbox2: document.querySelector("#checkbox2").checked,
+    isAcceptConditions: document.querySelector("#checkbox1").checked,
+    isAcceptNotifications: document.querySelector("#checkbox2").checked,
   };
 
   console.log("récupération de notre objet avec les valeurs", objectForm);
@@ -62,16 +59,20 @@ envoyerFormulaire.addEventListener("click", (e) => {
   localStorage.setItem("birthdate", objectForm.birthdate);
   localStorage.setItem("quantity", objectForm.quantity);
   localStorage.setItem("location", objectForm.location);
-  localStorage.setItem("checkbox1", objectForm.checkbox1);
-  localStorage.setItem("checkbox2", objectForm.checkbox2);
+  localStorage.setItem("isAcceptConditions", objectForm.isAcceptConditions);
+  localStorage.setItem(
+    "isAcceptNotifications",
+    objectForm.isAcceptNotifications
+  );
 
-  let isValid = validateForm(objectForm);
-  if (isValid) {
-    console.log("valide");
-  } else {
-    console.log("non valide");
-  }
-});
+  validateForm(objectForm);
+  // let isValid = validateForm(objectForm);
+  // if (isValid) {
+  //   console.log("valide");
+  // } else {
+  //   console.log("non valide");
+  // }
+}
 
 // fonction de vérification des champs du formulaire
 const validateForm = (objectForm) => {
@@ -111,7 +112,7 @@ const validateForm = (objectForm) => {
     alert("Veuillez cocher une ville");
     return false;
   }
-  if (objectForm.checkbox1 === false) {
+  if (objectForm.isAcceptConditions === false) {
     // alert("Veuillez accepter les conditions d'utilisation");
     document.getElementById("errorCheckbox1").innerHTML =
       "Veuillez accepter les conditions d'utilisation";
