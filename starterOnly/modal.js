@@ -74,17 +74,53 @@ function getFormData(e) {
   // }
 }
 
+// Add error on element of DOM
+function displayError(inputIdName, errorText) {
+  // Ajout de l'attribut 'data-error-visible' pour afficher bordure rouge
+  let formDataItem = document.getElementById(inputIdName).parentElement;
+  let errorAttribute = document.createAttribute("data-error-visible");
+  errorAttribute.value = "true";
+  formDataItem.setAttributeNode(errorAttribute);
+
+  // Ajout de l'attribut 'data-error' pour afficher message d'erreur
+  let errorMessageAttribute = document.createAttribute("data-error");
+  errorMessageAttribute.value = errorText;
+  formDataItem.setAttributeNode(errorMessageAttribute);
+}
+
+// Add error on element of DOM
+// function removeError() {
+//   // transforme les formDatas (HTMLCollection) en tableau
+//   let formDatas = Array.from(document.getElementsByClassName("formData"));
+
+//   // Boucle sur le tableau et supprime les attributs erreurs s'il y en a
+//   formDatas.forEach((formData) => {
+//     if (formData.hasAttribute("data-error")) {
+//       formData.removeAttribute("data-error");
+//     }
+//     if (formData.hasAttribute("data-error-visible")) {
+//       formData.removeAttribute("data-error-visible");
+//     }
+//   });
+// }
+
 // fonction de vérification des champs du formulaire
 const validateForm = (objectForm) => {
   console.log("objectForm =>", objectForm);
   if (objectForm.firstName.length < 2) {
-    document.getElementById("errorFirstName").innerHTML =
-      "Veuillez renseigner le champs prénom";
+    displayError(
+      "firstName",
+      "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
+    );
+
     return false;
   }
   if (objectForm.lastName.length < 2) {
-    document.getElementById("errorLastName").innerHTML =
-      "Veuillez renseigner le champs nom";
+    displayError(
+      "lastName",
+      "Veuillez entrer 2 caractères ou plus pour le champ du nom."
+    );
+
     return false;
   }
   if (
@@ -92,30 +128,36 @@ const validateForm = (objectForm) => {
     !objectForm.email.includes(".") ||
     objectForm.email.length < 5
   ) {
-    document.getElementById("errorEmail").innerHTML =
-      "Veuillez respecter le format email (exemple: gameOn@gmail.com)";
+    displayError(
+      "email",
+      "Veuillez respecter le format email (exemple: gameon@mail.com)"
+    );
+
     return false;
   }
   if (objectForm.birthdate.length < 1) {
-    document.getElementById("errorBirthdate").innerHTML =
-      "Veuillez saisir une date de naissance";
+    displayError("birthdate", "Vous devez entrer votre date de naissance.");
 
     return false;
   }
   if (objectForm.quantity.length < 1) {
-    document.getElementById("errorQuantity").innerHTML =
-      "Veuillez renseigner le champs quantité";
+    displayError(
+      "quantity",
+      "Veuillez renseigner le champs 'quantité de tournois'"
+    );
+
     return false;
   }
-  if (objectForm.location.length < 1) {
-    // document.getElementById('errorLocation').innerHTML="Veuillez cocher une ville"
-    alert("Veuillez cocher une ville");
+  if (objectForm.location === null) {
+    displayError("location1", "Vous devez choisir une option.");
+
     return false;
   }
   if (objectForm.isAcceptConditions === false) {
-    // alert("Veuillez accepter les conditions d'utilisation");
-    document.getElementById("errorCheckbox1").innerHTML =
-      "Veuillez accepter les conditions d'utilisation";
+    displayError(
+      "checkbox1",
+      "Veuillez accepter les conditions d'utilisation."
+    );
 
     return false;
   } else {
