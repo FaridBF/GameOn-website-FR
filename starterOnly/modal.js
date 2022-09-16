@@ -29,7 +29,7 @@ function launchModal() {
 // close modal form
 function closeModal() {
   //méthode qui permet de supprimer un style dans le dom
-  modalbg.removeAttribute("style");
+  modalbg.style.display = "none";
 }
 
 // fonction qui récupère les données du form et demande la vérificaiton
@@ -105,6 +105,18 @@ function removeError() {
   });
 }
 
+// fonction qui vérifie si email valide via les regex
+function isValidEmail(email) {
+  let emailReg = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
+  let valid = emailReg.test(email);
+
+  if (!valid) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 // fonction de vérification des champs du formulaire
 const validateForm = (objectForm) => {
   console.log("objectForm =>", objectForm);
@@ -124,11 +136,20 @@ const validateForm = (objectForm) => {
 
     return false;
   }
-  if (
-    !objectForm.email.includes("@") ||
-    !objectForm.email.includes(".") ||
-    objectForm.email.length < 5
-  ) {
+  // if (
+  //   !objectForm.email.includes("@") ||
+  //   !objectForm.email.includes(".") ||
+  //   objectForm.email.length < 5
+  // ) {
+  //   displayError(
+  //     "email",
+  //     "Veuillez respecter le format email (exemple: gameon@mail.com)"
+  //   );
+
+  //   return false;
+  // }
+
+  if (!isValidEmail(objectForm.email)) {
     displayError(
       "email",
       "Veuillez respecter le format email (exemple: gameon@mail.com)"
