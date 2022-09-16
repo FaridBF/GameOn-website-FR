@@ -76,33 +76,34 @@ function getFormData(e) {
 
 // Add error on element of DOM
 function displayError(inputIdName, errorText) {
-  // Ajout de l'attribut 'data-error-visible' pour afficher bordure rouge
+  //je supprime l'erreur avant d'afficher
+  removeError();
+  // Ajout de l'attribut 'data-error-visible' pour afficher bordure rouge (voir fichier modal.css)
   let formDataItem = document.getElementById(inputIdName).parentElement;
   let errorAttribute = document.createAttribute("data-error-visible");
   errorAttribute.value = "true";
   formDataItem.setAttributeNode(errorAttribute);
 
-  // Ajout de l'attribut 'data-error' pour afficher message d'erreur
+  // Ajout de l'attribut 'data-error' pour afficher message d'erreur (voir fichier modal.css)
   let errorMessageAttribute = document.createAttribute("data-error");
   errorMessageAttribute.value = errorText;
   formDataItem.setAttributeNode(errorMessageAttribute);
 }
 
 // Add error on element of DOM
-// function removeError() {
-//   // transforme les formDatas (HTMLCollection) en tableau
-//   let formDatas = Array.from(document.getElementsByClassName("formData"));
-
-//   // Boucle sur le tableau et supprime les attributs erreurs s'il y en a
-//   formDatas.forEach((formData) => {
-//     if (formData.hasAttribute("data-error")) {
-//       formData.removeAttribute("data-error");
-//     }
-//     if (formData.hasAttribute("data-error-visible")) {
-//       formData.removeAttribute("data-error-visible");
-//     }
-//   });
-// }
+function removeError() {
+  // transforme les formDatas (HTMLCollection) en tableau
+  let formDatas = Array.from(document.getElementsByClassName("formData"));
+  // Boucle sur le tableau et supprime les attributs erreurs s'il y en a
+  formDatas.forEach((formData) => {
+    if (formData.hasAttribute("data-error")) {
+      formData.removeAttribute("data-error");
+    }
+    if (formData.hasAttribute("data-error-visible")) {
+      formData.removeAttribute("data-error-visible");
+    }
+  });
+}
 
 // fonction de vérification des champs du formulaire
 const validateForm = (objectForm) => {
