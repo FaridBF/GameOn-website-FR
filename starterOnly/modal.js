@@ -24,6 +24,7 @@ submitFormInput.forEach((btn) => btn.addEventListener("click", getFormData));
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+  getDataInLocalStorage();
 }
 
 // close modal form
@@ -66,14 +67,15 @@ function getFormData(e) {
   );
 
   validateForm(objectForm);
-  // let isValid = validateForm(objectForm);
-  // if (isValid) {
-  //   console.log("valide");
-  // } else {
-  //   console.log("non valide");
-  // }
+  // console.log(validateForm(objectForm));
+  let isValid = validateForm(objectForm);
+  if (isValid) {
+    showValidationMessage();
+    console.log("valide");
+  } else {
+    console.log("non valide");
+  }
 }
-
 // Add error on element of DOM
 function displayError(inputIdName, errorText) {
   //je supprime l'erreur avant d'afficher
@@ -136,19 +138,6 @@ const validateForm = (objectForm) => {
 
     return false;
   }
-  // if (
-  //   !objectForm.email.includes("@") ||
-  //   !objectForm.email.includes(".") ||
-  //   objectForm.email.length < 5
-  // ) {
-  //   displayError(
-  //     "email",
-  //     "Veuillez respecter le format email (exemple: gameon@mail.com)"
-  //   );
-
-  //   return false;
-  // }
-
   if (!isValidEmail(objectForm.email)) {
     displayError(
       "email",
@@ -184,6 +173,40 @@ const validateForm = (objectForm) => {
     return false;
   } else {
     return true;
+  }
+};
+
+//Mettre le contenu du localStorage dans les champs du formulaire
+const getDataInLocalStorage = () => {
+  //Mettre les values du localStorage dans les champs du formulaire
+  if (localStorage.getItem("firstName").length > 0) {
+    document.getElementById("firstName").value =
+      localStorage.getItem("firstName");
+  }
+  if (localStorage.getItem("lastName").length > 0) {
+    document.getElementById("lastName").value =
+      localStorage.getItem("lastName");
+  }
+  if (localStorage.getItem("email").length > 0) {
+    document.getElementById("email").value = localStorage.getItem("email");
+  }
+  if (localStorage.getItem("birthdate").length > 0) {
+    document.getElementById("birthdate").value =
+      localStorage.getItem("birthdate");
+  }
+  if (localStorage.getItem("quantity").length > 0) {
+    document.getElementById("quantity").value =
+      localStorage.getItem("quantity");
+  }
+  if (localStorage.getItem("location").length > 0) {
+    const locationValueInStorage = localStorage.getItem("location");
+    // trouver l'input ayant la valeur de "locationValueInStorage" et le checker
+    document.querySelector(
+      `input[value="${locationValueInStorage}"]`
+    ).checked = true;
+  }
+  if (JSON.parse(localStorage.getItem("isAcceptNotifications")) === true) {
+    document.getElementById("checkbox2").checked = true;
   }
 };
 
