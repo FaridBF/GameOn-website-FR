@@ -13,6 +13,8 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeModalBtn = document.querySelectorAll(".close");
 const submitFormInput = document.querySelectorAll(".btn-submit");
+const reserveForm = document.querySelector("form");
+const validationMsg = document.querySelector(".validation-message");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -23,7 +25,12 @@ submitFormInput.forEach((btn) => btn.addEventListener("click", getFormData));
 
 // launch modal form
 function launchModal() {
+  // afficher la modal avec formulaire
   modalbg.style.display = "block";
+  reserveForm.style.display = "block";
+  // cacher le message de validation
+  validationMsg.style.display = "none";
+  // récupérer la data du localstorage
   getDataInLocalStorage();
 }
 
@@ -32,6 +39,14 @@ function closeModal() {
   //méthode qui permet de supprimer un style dans le dom
   modalbg.style.display = "none";
 }
+
+// Fonction qui affiche le message de validation et cache le form
+const showValidationMessage = () => {
+  // cacher le formulaire
+  reserveForm.style.display = "none";
+  // afficher le message
+  validationMsg.style.display = "block";
+};
 
 // fonction qui récupère les données du form et demande la vérificaiton
 function getFormData(e) {
@@ -48,7 +63,7 @@ function getFormData(e) {
         ? null
         : document.querySelector('input[name="location"]:checked').value,
     isAcceptConditions: document.querySelector("#checkbox1").checked,
-    isAcceptNotifications: document.querySelector("#checkbox2").checked,
+    isAcceptNotifications: document.querySelector("#checkbox2").checked
   };
 
   console.log("récupération de notre objet avec les valeurs", objectForm);
