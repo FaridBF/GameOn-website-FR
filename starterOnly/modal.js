@@ -7,7 +7,7 @@ function editNav() {
   }
 }
 
-// DOM Elements
+// Les éléments du DOM que je récupère
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
@@ -16,14 +16,14 @@ const submitFormInput = document.querySelectorAll(".btn-submit");
 const reserveForm = document.querySelector("form");
 const validationMsg = document.querySelector(".validation-message");
 
-// launch modal event
+// Les écouteurs d'évènements de mes modals
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // Close modal event
 closeModalBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 //sélection du bouton envoyer le formulaire
 submitFormInput.forEach((btn) => btn.addEventListener("click", getFormData));
 
-// launch modal form
+// Ouvrir la modal du formulaire
 function launchModal() {
   // afficher la modal avec formulaire
   modalbg.style.display = "block";
@@ -34,7 +34,7 @@ function launchModal() {
   getDataInLocalStorage();
 }
 
-// close modal form
+// Fermer la modal du formulaire
 function closeModal() {
   //méthode qui permet de supprimer un style dans le dom
   modalbg.style.display = "none";
@@ -81,17 +81,18 @@ function getFormData(e) {
     objectForm.isAcceptNotifications
   );
 
+  //Fonction pour vérifier si le formulaire est valide avant l'envoi
   validateForm(objectForm);
-  // console.log(validateForm(objectForm));
   let isValid = validateForm(objectForm);
   if (isValid) {
     showValidationMessage();
-    console.log("valide");
+    console.log("Formulaire valide");
+    localStorage.clear();
   } else {
-    console.log("non valide");
+    console.log("Formulaire non valide");
   }
 }
-// Add error on element of DOM
+// Gestion des erreurs sur les éléments du DOM (fonction permettant l'affichage des erreurs)
 function displayError(inputIdName, errorText) {
   //je supprime l'erreur avant d'afficher
   removeError();
@@ -107,7 +108,7 @@ function displayError(inputIdName, errorText) {
   formDataItem.setAttributeNode(errorMessageAttribute);
 }
 
-// Add error on element of DOM
+// Gestion des erreurs sur les éléments du DOM (fonction permettant de remove les erreurs)
 function removeError() {
   // transforme les formDatas (HTMLCollection) en tableau
   let formDatas = Array.from(document.getElementsByClassName("formData"));
@@ -122,7 +123,7 @@ function removeError() {
   });
 }
 
-// fonction qui vérifie si email valide via les regex
+// fonction qui vérifie si email valide via les regex (expression régulière)
 function isValidEmail(email) {
   let emailReg = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
   let valid = emailReg.test(email);
@@ -194,22 +195,22 @@ const validateForm = (objectForm) => {
 //Mettre le contenu du localStorage dans les champs du formulaire
 const getDataInLocalStorage = () => {
   //Mettre les values du localStorage dans les champs du formulaire
-  if (localStorage.getItem("firstName").length > 0) {
+  if (localStorage.getItem("#firstName").length > 0) {
     document.getElementById("firstName").value =
       localStorage.getItem("firstName");
   }
-  if (localStorage.getItem("lastName").length > 0) {
+  if (localStorage.getItem("#lastName").length > 0) {
     document.getElementById("lastName").value =
       localStorage.getItem("lastName");
   }
-  if (localStorage.getItem("email").length > 0) {
+  if (localStorage.getItem("#email").length > 0) {
     document.getElementById("email").value = localStorage.getItem("email");
   }
-  if (localStorage.getItem("birthdate").length > 0) {
+  if (localStorage.getItem("#birthdate").length > 0) {
     document.getElementById("birthdate").value =
       localStorage.getItem("birthdate");
   }
-  if (localStorage.getItem("quantity").length > 0) {
+  if (localStorage.getItem("#quantity").length > 0) {
     document.getElementById("quantity").value =
       localStorage.getItem("quantity");
   }
@@ -224,9 +225,3 @@ const getDataInLocalStorage = () => {
     document.getElementById("checkbox2").checked = true;
   }
 };
-
-// // Formulaire à envoyer
-// const sendForms = {
-//   objectForm
-// }
-// console.log("formulaire envoyé au serveur" , sendForms)
