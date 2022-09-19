@@ -36,7 +36,6 @@ function launchModal() {
 
 // Fermer la modal du formulaire
 function closeModal() {
-  //méthode qui permet de supprimer un style dans le dom
   modalbg.style.display = "none";
 }
 
@@ -87,7 +86,7 @@ function getFormData(e) {
   if (isValid) {
     showValidationMessage();
     console.log("Formulaire valide");
-    localStorage.clear();
+    // localStorage.clear();
   } else {
     console.log("Formulaire non valide");
   }
@@ -183,7 +182,7 @@ const validateForm = (objectForm) => {
   if (objectForm.isAcceptConditions === false) {
     displayError(
       "checkbox1",
-      "Veuillez accepter les conditions d'utilisation."
+      "Vous devez vérifier que vous acceptez les termes et conditions."
     );
 
     return false;
@@ -195,26 +194,41 @@ const validateForm = (objectForm) => {
 //Mettre le contenu du localStorage dans les champs du formulaire
 const getDataInLocalStorage = () => {
   //Mettre les values du localStorage dans les champs du formulaire
-  if (localStorage.getItem("#firstName").length > 0) {
+  if (
+    localStorage.getItem("firstName") !== null &&
+    localStorage.getItem("firstName").length > 0
+  ) {
     document.getElementById("firstName").value =
       localStorage.getItem("firstName");
   }
-  if (localStorage.getItem("#lastName").length > 0) {
+  if (
+    localStorage.getItem("lastName") !== null &&
+    localStorage.getItem("lastName").length > 0
+  ) {
     document.getElementById("lastName").value =
       localStorage.getItem("lastName");
   }
-  if (localStorage.getItem("#email").length > 0) {
+  if (
+    localStorage.getItem("email") !== null &&
+    localStorage.getItem("email").length > 0
+  ) {
     document.getElementById("email").value = localStorage.getItem("email");
   }
-  if (localStorage.getItem("#birthdate").length > 0) {
+  if (
+    localStorage.getItem("birthdate") !== null &&
+    localStorage.getItem("birthdate").length > 0
+  ) {
     document.getElementById("birthdate").value =
       localStorage.getItem("birthdate");
   }
-  if (localStorage.getItem("#quantity").length > 0) {
+  if (
+    localStorage.getItem("quantity") !== null &&
+    localStorage.getItem("quantity").length > 0
+  ) {
     document.getElementById("quantity").value =
       localStorage.getItem("quantity");
   }
-  if (localStorage.getItem("location").length > 0) {
+  if (localStorage.getItem("location") !== null) {
     const locationValueInStorage = localStorage.getItem("location");
     // trouver l'input ayant la valeur de "locationValueInStorage" et le checker
     document.querySelector(
