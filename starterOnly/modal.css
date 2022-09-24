@@ -512,15 +512,49 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+
 @media screen and (max-width: 800px) {
+  html {
+    padding: 15px;
+  }
+  body {
+    overflow-x: none; /*pour supprimer le defilement horizontal*/
+  }
+  main {
+    padding: 0px;
+    margin: 0px;
+    /* min-width: 350px; */
+  }
+  img {
+    width: 100%;
+  }
+  .topnav {
+    overflow: hidden;
+    display: flex;
+    margin: 3.5%;
+    align-items: center;
+  }
+  .content {
+    width: 90%;
+    margin: 25px 12px;
+  }
   .hero-section {
-    display: block;
+    display: flex;
     box-shadow: unset;
+    flex-direction: column;
   }
   .hero-content {
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 0px;
+    /* padding: 20px; */
+  }
+  .close-modal-validation {
+    display: flex;
+    justify-content: center;
+  }
+  .formData[data-error]::after {
+    font-size: 8px;
   }
   .hero-content::after {
     content: unset;
@@ -529,12 +563,17 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 60px;
+    max-width: 70%;
     white-space: normal;
   }
   .hero-text {
     width: unset;
-    font-size: 1.5rem;
+    max-width: 70%;
+    font-size: 1.2rem;
+  }
+  .hero-img {
+    width: 95%;
   }
   .hero-img img {
     border-radius: 10px;
