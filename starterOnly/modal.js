@@ -57,6 +57,7 @@ function getFormData(e) {
     email: document.querySelector("#email").value,
     birthdate: document.querySelector("#birthdate").value,
     quantity: document.querySelector("#quantity").value,
+    // si aucune location sélectionnée alors set à null, sinon prendre la valeur
     location:
       document.querySelector('input[name="location"]:checked') == null
         ? null
@@ -86,7 +87,7 @@ function getFormData(e) {
   if (isValid) {
     showValidationMessage();
     console.log("Formulaire valide");
-    // localStorage.clear();
+    localStorage.clear();
   } else {
     console.log("Formulaire non valide");
   }
@@ -134,10 +135,23 @@ function isValidEmail(email) {
   }
 }
 
+// fonction qui vérifie si lastName ou firstName valide via les regex (expression régulière)
+function isValidName(name) {
+  let nameReg = new RegExp(/^[a-zA-Z-]{2,150}$/);
+  let isValidName = nameReg.test(name);
+
+  if (!isValidName) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 // fonction de vérification des champs du formulaire
 const validateForm = (objectForm) => {
   console.log("objectForm =>", objectForm);
-  if (objectForm.firstName.length < 2) {
+
+  if (!isValidName(objectForm.firstName)) {
     displayError(
       "firstName",
       "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
@@ -145,7 +159,7 @@ const validateForm = (objectForm) => {
 
     return false;
   }
-  if (objectForm.lastName.length < 2) {
+  if (!isValidName(objectForm.lastName)) {
     displayError(
       "lastName",
       "Veuillez entrer 2 caractères ou plus pour le champ du nom."
@@ -166,7 +180,7 @@ const validateForm = (objectForm) => {
 
     return false;
   }
-  if (objectForm.quantity.length < 1) {
+  if (objectForm.quantity.length < 1 || objectForm.quantity < 0) {
     displayError(
       "quantity",
       "Veuillez renseigner le champs 'quantité de tournois'"
@@ -228,7 +242,7 @@ const getDataInLocalStorage = () => {
     document.getElementById("quantity").value =
       localStorage.getItem("quantity");
   }
-  if (localStorage.getItem("location") !== null) {
+  if (JSON.parse(localStorage.getItem("location")) !== null) {
     const locationValueInStorage = localStorage.getItem("location");
     // trouver l'input ayant la valeur de "locationValueInStorage" et le checker
     document.querySelector(
